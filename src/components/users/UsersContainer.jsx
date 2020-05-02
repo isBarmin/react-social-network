@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { api } from '../../dal/api';
 import {
   followAC,
   unfollowAC,
@@ -34,15 +34,30 @@ class UsersContainer extends React.Component {
       setTotalUsersCount,
     } = this.props;
     setIsLoading(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`,
-      )
-      .then((response) => {
-        setIsLoading(false);
-        setUsers(response.data.items);
-        setTotalUsersCount(response.data.totalCount);
-      });
+
+    api.requestUsers(currentPage, pageSize).then((data) => {
+      setIsLoading(false);
+      setUsers(data.items);
+      setTotalUsersCount(data.totalCount);
+    });
+  };
+
+  followHandler = (userId) => {
+    const { follow } = this.props;
+    api.follow(userId).then((data) => {
+      if (data.resultCode === 0) {
+        follow(userId);
+      }
+    });
+  };
+
+  unfollowHandler = (userId) => {
+    const { unfollow } = this.props;
+    api.unfollow(userId).then((data) => {
+      if (data.resultCode === 0) {
+        unfollow(userId);
+      }
+    });
   };
 
   calcPageCount = () => {
@@ -55,8 +70,6 @@ class UsersContainer extends React.Component {
       users,
       pageSize,
       currentPage,
-      follow,
-      unfollow,
       setUsers,
       isLoading,
       changePage,
@@ -76,8 +89,8 @@ class UsersContainer extends React.Component {
           pageSize={pageSize}
           currentPage={currentPage}
           setUsers={setUsers}
-          onFollowClick={follow}
-          onUnfollowClick={unfollow}
+          onFollowClick={this.followHandler}
+          onUnfollowClick={this.unfollowHandler}
         />
       </>
     );
