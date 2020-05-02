@@ -1,0 +1,26 @@
+.profile-card {
+  display: flex;
+
+  &__aside {
+    flex-shrink: 0;
+  }
+
+  &__photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: transparentize(black, 0.9);
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  &__body {
+  }
+
+  &__status {
+  }
+}

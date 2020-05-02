@@ -1,0 +1,24 @@
+.pagination {
+  max-width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+
+  &__btn {
+    margin-right: 8px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &_active {
+      color: #fff;
+      background: tomato;
+      cursor: default;
+    }
+  }
+}

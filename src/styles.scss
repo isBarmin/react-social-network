@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+}
+
+.app {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'aside content'
+    'aside content';
+  grid-template-rows: 64px 1fr;
+  grid-template-columns: 200px 1fr;
+  width: 100vw;
+  height: 100vh;
+  font-size: 16px;
+  font-family: sans-serif;
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__aside {
+    grid-area: aside;
+  }
+
+  &__main {
+    grid-area: content;
+    overflow: auto;
+  }
+}

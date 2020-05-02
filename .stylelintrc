@@ -12,7 +12,9 @@
   ],
   "rules": {
     "order/properties-order": [],
-    "plugin/rational-order": [true, {}],
+    "plugin/rational-order": [true, {
+      "border-in-box-model": true
+    }],
     "prettier/prettier": true,
     "declaration-property-value-blacklist": null,
     "max-nesting-depth": null

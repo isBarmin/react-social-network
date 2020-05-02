@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import { Route } from 'react-router-dom';
+import HeaderContainer from './components/header/HeaderContainer';
+import Navigation from './components/navigation/Navigation';
+import Profile from './components/profile/Profile';
+import DialogsContainer from './components/dialogs/DialogsContainer';
+import UsersContainer from './components/users/UsersContainer';
+import './styles.scss';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <HeaderContainer />
+      <Navigation className="app__aside" />
+
+      <div className="app__main">
+        <Route path="/profile/:userId?" component={Profile} />
+        <Route path="/dialogs" render={() => <DialogsContainer />} />
+        <Route path="/users" render={() => <UsersContainer />} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
