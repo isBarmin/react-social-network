@@ -6,6 +6,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
+const UPDATE_FOLLOWING_PROCESS = 'UPDATE_FOLLOWING_PROCESS';
 
 const initialState = {
   users: [],
@@ -13,6 +14,7 @@ const initialState = {
   pageSize: 16,
   totalUsersCount: 0,
   isLoading: false,
+  followingProcess: [],
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -58,6 +60,17 @@ const usersReducer = (state = initialState, action) => {
         }),
       };
 
+    case UPDATE_FOLLOWING_PROCESS:
+      const { userId, inProcess } = payload;
+      const followingProcess = inProcess
+        ? [...state.followingProcess, userId]
+        : state.followingProcess.filter((id) => id !== userId);
+
+      return {
+        ...state,
+        followingProcess,
+      };
+
     case CHANGE_CURRENT_PAGE:
       return {
         ...state,
@@ -97,6 +110,11 @@ export const setTotalUsersCountAC = (value) => ({
 export const changeCurrentPageAC = (value) => ({
   type: CHANGE_CURRENT_PAGE,
   payload: value,
+});
+
+export const updateFollowingProcessAC = (userId, inProcess) => ({
+  type: UPDATE_FOLLOWING_PROCESS,
+  payload: { userId, inProcess },
 });
 
 export default usersReducer;

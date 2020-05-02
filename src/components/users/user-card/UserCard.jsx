@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './UserCard.scss';
 
 const UserCard = (props) => {
-  const { data, onFollowClick, onUnfollowClick } = props;
+  const { data, disableFollowButton, onFollowClick, onUnfollowClick } = props;
   const { id, name, photos, followed, status } = data;
   const mainCls = 'user-card';
 
@@ -25,11 +25,19 @@ const UserCard = (props) => {
         <div className={`${mainCls}__name`}>{name}</div>
 
         {followed ? (
-          <button onClick={handleUnfollowClick} type="button">
+          <button
+            onClick={handleUnfollowClick}
+            disabled={disableFollowButton}
+            type="button"
+          >
             Unfollow
           </button>
         ) : (
-          <button onClick={handleFollowClick} type="button">
+          <button
+            onClick={handleFollowClick}
+            disabled={disableFollowButton}
+            type="button"
+          >
             Follow
           </button>
         )}

@@ -8,6 +8,7 @@ import {
   setIsLoadingAC,
   setTotalUsersCountAC,
   changeCurrentPageAC,
+  updateFollowingProcessAC,
 } from '../../store/users/reducer';
 import Users from './Users';
 import Pagination from '../pagination/Pagination';
@@ -43,19 +44,23 @@ class UsersContainer extends React.Component {
   };
 
   followHandler = (userId) => {
-    const { follow } = this.props;
+    const { follow, updateFollowingProcess } = this.props;
+    updateFollowingProcess(userId, true);
     api.follow(userId).then((data) => {
       if (data.resultCode === 0) {
         follow(userId);
+        updateFollowingProcess(userId, false);
       }
     });
   };
 
   unfollowHandler = (userId) => {
-    const { unfollow } = this.props;
+    const { unfollow, updateFollowingProcess } = this.props;
+    updateFollowingProcess(userId, true);
     api.unfollow(userId).then((data) => {
       if (data.resultCode === 0) {
         unfollow(userId);
+        updateFollowingProcess(userId, false);
       }
     });
   };
@@ -68,9 +73,8 @@ class UsersContainer extends React.Component {
   render() {
     const {
       users,
-      pageSize,
       currentPage,
-      setUsers,
+      followingProcess,
       isLoading,
       changePage,
     } = this.props;
@@ -86,9 +90,7 @@ class UsersContainer extends React.Component {
 
         <Users
           users={users}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          setUsers={setUsers}
+          followingProcess={followingProcess}
           onFollowClick={this.followHandler}
           onUnfollowClick={this.unfollowHandler}
         />
@@ -104,6 +106,7 @@ const mapStateToProps = (state) => {
     pageSize: state.usersReducer.pageSize,
     currentPage: state.usersReducer.currentPage,
     totalUsersCount: state.usersReducer.totalUsersCount,
+    followingProcess: state.usersReducer.followingProcess,
   };
 };
 
@@ -126,6 +129,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     changePage: (value) => {
       dispatch(changeCurrentPageAC(value));
+    },
+    updateFollowingProcess: (userId, inProcess) => {
+      dispatch(updateFollowingProcessAC(userId, inProcess));
     },
   };
 };
