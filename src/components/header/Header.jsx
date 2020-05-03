@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import './Header.scss';
 
 const Header = (props) => {
-  const { className } = props;
+  const { className, isAuth, login } = props;
   const mainCls = 'header';
   const classes = classNames({
     [mainCls]: true,
@@ -17,7 +17,7 @@ const Header = (props) => {
 
       <div className={`${mainCls}__part`}>
         <div className="user-block">
-          <NavLink to="/login" />
+          {isAuth ? login : <NavLink to="/login" />}
         </div>
       </div>
     </header>
