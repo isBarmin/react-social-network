@@ -17,7 +17,7 @@ const Header = (props) => {
 
       <div className={`${mainCls}__part`}>
         <div className="user-block">
-          {isAuth ? login : <NavLink to="/login" />}
+          {isAuth ? login : <NavLink to="/login">Login</NavLink>}
         </div>
       </div>
     </header>
