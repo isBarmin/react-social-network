@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import Login from './components/login/Login';
 import HeaderContainer from './components/header/HeaderContainer';
 import Navigation from './components/navigation/Navigation';
-import Profile from './components/profile/Profile';
+import ProfileContainer from './components/profile/ProfileContainer';
 import DialogsContainer from './components/dialogs/DialogsContainer';
 import UsersContainer from './components/users/UsersContainer';
 import './styles.scss';
@@ -16,7 +16,7 @@ const App = () => {
 
       <div className="app__main">
         <Route path="/login" component={Login} />
-        <Route path="/profile/:userId?" component={Profile} />
+        <Route path="/profile/:userId?" component={ProfileContainer} />
         <Route path="/dialogs" render={() => <DialogsContainer />} />
         <Route path="/users" render={() => <UsersContainer />} />
       </div>
