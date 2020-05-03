@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { api } from '../../dal/api';
+import * as thunk from '../../store/auth/thunks';
 import Header from './Header';
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    api.auth().then((data) => {
-      console.log(data);
-    });
+    const { auth } = this.props;
+    auth();
   }
 
   render() {
@@ -20,7 +19,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    auth: (data) => dispatch(thunk.auth(data)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

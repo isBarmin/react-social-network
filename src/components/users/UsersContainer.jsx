@@ -1,68 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { api } from '../../dal/api';
 import {
-  followAC,
-  unfollowAC,
-  setUsersAC,
-  setIsLoadingAC,
-  setTotalUsersCountAC,
   changeCurrentPageAC,
   updateFollowingProcessAC,
 } from '../../store/users/reducer';
+import * as thunks from '../../store/users/thunks';
 import Users from './Users';
 import Pagination from '../pagination/Pagination';
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.requestUsers();
+    const { getUsers, pageSize, currentPage } = this.props;
+    getUsers(currentPage, pageSize);
   }
 
   componentDidUpdate(prevProps) {
-    const { currentPage } = this.props;
-
+    const { getUsers, currentPage, pageSize } = this.props;
     if (prevProps.currentPage !== currentPage) {
-      this.requestUsers();
+      getUsers(currentPage, pageSize);
     }
   }
 
-  requestUsers = () => {
-    const {
-      setUsers,
-      pageSize,
-      currentPage,
-      setIsLoading,
-      setTotalUsersCount,
-    } = this.props;
-    setIsLoading(true);
-
-    api.requestUsers(currentPage, pageSize).then((data) => {
-      setIsLoading(false);
-      setUsers(data.items);
-      setTotalUsersCount(data.totalCount);
-    });
-  };
-
   followHandler = (userId) => {
-    const { follow, updateFollowingProcess } = this.props;
-    updateFollowingProcess(userId, true);
-    api.follow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        follow(userId);
-        updateFollowingProcess(userId, false);
-      }
-    });
+    const { follow } = this.props;
+    follow(userId);
   };
 
   unfollowHandler = (userId) => {
-    const { unfollow, updateFollowingProcess } = this.props;
-    updateFollowingProcess(userId, true);
-    api.unfollow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        unfollow(userId);
-        updateFollowingProcess(userId, false);
-      }
-    });
+    const { unfollow } = this.props;
+    unfollow(userId);
   };
 
   calcPageCount = () => {
@@ -112,21 +78,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setIsLoading: (isLoading) => {
-      dispatch(setIsLoadingAC(isLoading));
-    },
-    setUsers: (users) => {
-      dispatch(setUsersAC(users));
-    },
-    setTotalUsersCount: (users) => {
-      dispatch(setTotalUsersCountAC(users));
-    },
-    follow: (userId) => {
-      dispatch(followAC(userId));
-    },
-    unfollow: (userId) => {
-      dispatch(unfollowAC(userId));
-    },
+    getUsers: (currentPage, pageSize) =>
+      dispatch(thunks.getUsers(currentPage, pageSize)),
+    follow: (userId) => dispatch(thunks.follow(userId)),
+    unfollow: (userId) => dispatch(thunks.unfollow(userId)),
     changePage: (value) => {
       dispatch(changeCurrentPageAC(value));
     },
