@@ -6,9 +6,9 @@
   }
 
   &__photo {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
     background: transparentize(black, 0.9);
 
     img {
@@ -19,6 +19,7 @@
   }
 
   &__body {
+    padding: 16px;
   }
 
   &__status {

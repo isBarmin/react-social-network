@@ -1,7 +1,9 @@
 const ADD_POST = 'ADD_POST';
 const CHANGE_POST_TEXT = 'CHANGE_POST_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 const initialState = {
+  userProfile: {},
   postText: '',
   posts: [
     {
@@ -23,6 +25,12 @@ const profileReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: payload,
+      };
+
     case CHANGE_POST_TEXT:
       return {
         ...state,
@@ -43,6 +51,11 @@ const profileReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export const setUserProfileAC = (profileData) => ({
+  type: SET_USER_PROFILE,
+  payload: profileData,
+});
 
 export const addPostAC = () => ({
   type: ADD_POST,
