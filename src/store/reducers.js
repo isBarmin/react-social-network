@@ -1,3 +1,4 @@
+import { reducer as formReducer } from 'redux-form';
 import authReducer from './auth/reducer';
 import profileReducer from './profile/reducer';
 import dialogsReducer from './dialogs/reducer';
@@ -8,6 +9,7 @@ const reducers = {
   profileReducer,
   dialogsReducer,
   usersReducer,
+  form: formReducer,
 };
 
 export default reducers;
