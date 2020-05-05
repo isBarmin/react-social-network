@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addPostAC, changePostTextAC } from '../../../store/profile/reducer';
+import * as profileSelectors from '../../../store/profile/selectors';
 import MyPosts from './MyPosts';
 
 const MyPostsContainer = (props) => {
@@ -18,8 +19,8 @@ const MyPostsContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.profileReducer.posts,
-    postText: state.profileReducer.postText,
+    posts: profileSelectors.posts(state),
+    postText: profileSelectors.postText(state),
   };
 };
 

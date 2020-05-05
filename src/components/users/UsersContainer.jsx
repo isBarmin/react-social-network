@@ -4,9 +4,10 @@ import {
   changeCurrentPageAC,
   updateFollowingProcessAC,
 } from '../../store/users/reducer';
+import * as usersSelectors from '../../store/users/selectors';
 import * as thunks from '../../store/users/thunks';
-import Users from './Users';
 import Pagination from '../pagination/Pagination';
+import Users from './Users';
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -67,12 +68,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.usersReducer.isLoading,
-    users: state.usersReducer.users,
-    pageSize: state.usersReducer.pageSize,
-    currentPage: state.usersReducer.currentPage,
-    totalUsersCount: state.usersReducer.totalUsersCount,
-    followingProcess: state.usersReducer.followingProcess,
+    isLoading: usersSelectors.isLoading(state),
+    users: usersSelectors.users(state),
+    pageSize: usersSelectors.pageSize(state),
+    currentPage: usersSelectors.currentPage(state),
+    totalUsersCount: usersSelectors.totalUsersCount(state),
+    followingProcess: usersSelectors.followingProcess(state),
   };
 };
 

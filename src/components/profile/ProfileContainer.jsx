@@ -3,6 +3,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as thunk from '../../store/profile/thunks';
+import * as profileSelectors from '../../store/profile/selectors';
+import * as authSelectors from '../../store/auth/selectors';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import Profile from './Profile';
 
@@ -22,16 +24,16 @@ class ProfileContainer extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  profile: profileSelectors.userProfile(state),
+  status: profileSelectors.status(state),
+  authUserId: authSelectors.id(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   getUserProfile: (userId) => dispatch(thunk.getUserProfile(userId)),
   getProfileStatus: (userId) => dispatch(thunk.getProfileStatus(userId)),
   updateStatus: (status) => dispatch(thunk.updateProfileStatus(status)),
-});
-
-const mapStateToProps = (state) => ({
-  profile: state.profileReducer.userProfile,
-  status: state.profileReducer.status,
-  authUserId: state.authReducer.id,
 });
 
 export default compose(
