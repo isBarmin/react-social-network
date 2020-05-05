@@ -1,9 +1,10 @@
 import React from 'react';
 import * as _ from 'lodash';
+import ProfileStatus from './profile-status/ProfileStatus';
 import './ProfileCard.scss';
 
 const ProfileCard = (props) => {
-  const { profile } = props;
+  const { profile, status, onChangeStatus, noEditableStatus } = props;
   const {
     userId,
     fullName,
@@ -25,7 +26,12 @@ const ProfileCard = (props) => {
 
       <div className={`${mainCls}__body`}>
         <div className={`${mainCls}__name`}>{fullName}</div>
-        <div className={`${mainCls}__status`}>{aboutMe}</div>
+        <div className={`${mainCls}__about`}>{aboutMe}</div>
+        <ProfileStatus
+          status={status}
+          onChange={onChangeStatus}
+          noEditable={noEditableStatus}
+        />
       </div>
     </div>
   );

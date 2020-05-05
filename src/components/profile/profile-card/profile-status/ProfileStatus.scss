@@ -1,0 +1,14 @@
+.profile-status {
+  span {
+    opacity: 0;
+  }
+
+  input {
+    float: left;
+    width: 100%;
+    border: none;
+    font: inherit;
+    outline: none;
+    transform: translateY(-100%);
+  }
+}

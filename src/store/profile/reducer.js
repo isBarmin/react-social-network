@@ -1,9 +1,11 @@
 const ADD_POST = 'ADD_POST';
 const CHANGE_POST_TEXT = 'CHANGE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
 
 const initialState = {
   userProfile: {},
+  status: '',
   postText: '',
   posts: [
     {
@@ -31,6 +33,12 @@ const profileReducer = (state = initialState, action) => {
         userProfile: payload,
       };
 
+    case SET_PROFILE_STATUS:
+      return {
+        ...state,
+        status: payload,
+      };
+
     case CHANGE_POST_TEXT:
       return {
         ...state,
@@ -55,6 +63,11 @@ const profileReducer = (state = initialState, action) => {
 export const setUserProfileAC = (profileData) => ({
   type: SET_USER_PROFILE,
   payload: profileData,
+});
+
+export const setProfileStatusAC = (status) => ({
+  type: SET_PROFILE_STATUS,
+  payload: status,
 });
 
 export const addPostAC = () => ({

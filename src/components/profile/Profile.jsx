@@ -4,12 +4,17 @@ import MyPostsContainer from './my-posts/MyPostsContainer';
 import './Profile.scss';
 
 const Profile = (props) => {
-  const { profile } = props;
+  const { profile, status, updateStatus, noEditableStatus } = props;
 
   return (
     <div className="profile">
       <h2>Profile</h2>
-      <ProfileCard profile={profile} />
+      <ProfileCard
+        profile={profile}
+        status={status}
+        onChangeStatus={updateStatus}
+        noEditableStatus={noEditableStatus}
+      />
       <MyPostsContainer />
     </div>
   );

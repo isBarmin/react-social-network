@@ -22,7 +22,8 @@
     "react/no-array-index-key": "off",
     "no-unused-vars": "off",
     "no-param-reassign": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "react/state-in-constructor": "off"
   },
   "parser": "babel-eslint"
 }

@@ -6,27 +6,32 @@ import * as thunk from '../../store/profile/thunks';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import Profile from './Profile';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    const { getUserProfile, authUserId, match } = this.props;
+    const { getUserProfile, getProfileStatus, authUserId, match } = this.props;
     const id = match.params.userId || authUserId;
     getUserProfile(id);
+    getProfileStatus(id);
   }
 
   render() {
+    const { match } = this.props;
+    const noEditableStatus = Boolean(match.params.userId);
     // eslint-disable-next-line react/jsx-props-no-spreading
-    return <Profile {...this.props} />;
+    return <Profile {...this.props} noEditableStatus={noEditableStatus} />;
   }
 }
 
-const mapStateToProps = (state) => ({
-  profile: state.profileReducer.userProfile,
-  authUserId: state.authReducer.id,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   getUserProfile: (userId) => dispatch(thunk.getUserProfile(userId)),
+  getProfileStatus: (userId) => dispatch(thunk.getProfileStatus(userId)),
+  updateStatus: (status) => dispatch(thunk.updateProfileStatus(status)),
+});
+
+const mapStateToProps = (state) => ({
+  profile: state.profileReducer.userProfile,
+  status: state.profileReducer.status,
+  authUserId: state.authReducer.id,
 });
 
 export default compose(
