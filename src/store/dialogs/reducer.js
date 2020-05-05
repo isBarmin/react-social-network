@@ -1,8 +1,6 @@
-const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE_NEW_MESSAGE_TEXT';
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
 const initialState = {
-  newMessage: '',
   dialogs: [
     { id: '1', name: 'Dimych' },
     { id: '2', name: 'Sergey' },
@@ -21,16 +19,10 @@ const dialogsReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case CHANGE_NEW_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessage: payload,
-      };
-
     case SEND_MESSAGE:
       const message = {
         id: '5',
-        text: state.newMessage,
+        text: payload,
       };
       return {
         ...state,
@@ -42,13 +34,9 @@ const dialogsReducer = (state = initialState, action) => {
   }
 };
 
-export const changeMessageAC = (text) => ({
-  type: CHANGE_NEW_MESSAGE_TEXT,
-  payload: text,
-});
-
-export const sendMessageAC = () => ({
+export const sendMessageAC = (message) => ({
   type: SEND_MESSAGE,
+  payload: message,
 });
 
 export default dialogsReducer;
