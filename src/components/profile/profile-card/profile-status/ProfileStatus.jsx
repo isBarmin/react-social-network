@@ -1,59 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfileStatus.scss';
 
-class ProfileStatus extends React.Component {
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    status: this.props.status,
+const ProfileStatus = (props) => {
+  const mainCls = 'profile-status';
+  const [status, setStatus] = useState(props.status);
+
+  useEffect(() => {
+    setStatus(props.status);
+  }, [props.status]);
+
+  const changeHandler = (event) => {
+    setStatus(event.target.value);
   };
 
-  componentDidUpdate(prevProps) {
-    const { status } = this.props;
-    if (prevProps.status !== status) {
-      this.updateValue();
-    }
-  }
-
-  updateValue = () => {
-    const { status } = this.props;
-    this.setState({
-      status,
-    });
-  };
-
-  changeHandler = (event) => {
-    this.setState({
-      status: event.target.value,
-    });
-  };
-
-  blurHandler = (event) => {
-    const { onChange, status } = this.props;
-    const { status: stateStatus } = this.state;
-
-    if (status !== stateStatus) {
-      onChange(event.target.value);
+  const blurHandler = (event) => {
+    if (props.status !== status) {
+      props.onChange(event.target.value);
     }
   };
 
-  render() {
-    const { noEditable } = this.props;
-    const { status } = this.state;
-    const mainCls = 'profile-status';
-
-    return (
-      <div className={mainCls}>
-        <span>{status}</span>
-        <input
-          readOnly={noEditable}
-          value={status}
-          onChange={this.changeHandler}
-          onBlur={this.blurHandler}
-          type="text"
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={mainCls}>
+      <span>{status}</span>
+      <input
+        readOnly={props.noEditable}
+        value={status}
+        onChange={changeHandler}
+        onBlur={blurHandler}
+        type="text"
+      />
+    </div>
+  );
+};
 
 export default ProfileStatus;
